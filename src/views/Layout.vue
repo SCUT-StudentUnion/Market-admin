@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
       <el-menu-item index="dashboard">仪表盘</el-menu-item>
       <el-menu-item index="goods">物品</el-menu-item>
@@ -35,5 +35,10 @@ export default {
 <style lang="scss" scoped>
 .right-menu-item {
   float: right !important;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
 }
 </style>

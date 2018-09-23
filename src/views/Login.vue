@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-card class="login-card" shadow="always">
       <h2 slot="header" class="login-title">
-        华工二手市场后端
+        华工二手市场后台
       </h2>
       <el-form :model="loginForm" label-width="60px" @submit.native.prevent="login">
         <el-form-item label="用户名">
