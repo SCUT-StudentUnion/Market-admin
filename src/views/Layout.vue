@@ -3,6 +3,7 @@
     <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
       <el-menu-item index="dashboard">仪表盘</el-menu-item>
       <el-menu-item index="goods">物品</el-menu-item>
+      <el-menu-item index="audit">审核<el-badge :value="12" :max="99" /></el-menu-item>
       <el-menu-item index="logout" class="right-menu-item">注销</el-menu-item>
     </el-menu>
     <router-view/>
@@ -22,7 +23,7 @@ export default {
   methods: {
     handleSelect(key) {
       if (key === "logout") {
-        // do logout
+        //TODO: do logout
         this.$router.replace({ name: "login" });
       } else {
         this.$router.replace({ name: key });

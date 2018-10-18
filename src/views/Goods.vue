@@ -5,8 +5,8 @@
       <el-table-column type="expand">
         <template slot-scope="{row}">
           <el-row tag="dl">
-            <el-col tag="dt" :span="2">详细信息:</el-col>
-            <el-col tag="dd" :span="10">{{row.detail}}</el-col>
+            <el-col tag="dt" :span="3">详细信息:</el-col>
+            <el-col tag="dd" :span="9">{{row.detail}}</el-col>
           </el-row>
         </template>
       </el-table-column>

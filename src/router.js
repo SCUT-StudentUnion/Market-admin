@@ -4,6 +4,7 @@ import Login from './views/Login.vue'
 import Layout from './views/Layout.vue'
 import Dashboard from './views/Dashboard.vue'
 import Goods from "./views/Goods.vue";
+import Audit from "./views/Audit.vue";
 
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
           path: '/goods',
           name: 'goods',
           component: Goods
+        }, {
+          path: '/audit',
+          name: 'audit',
+          component: Audit
         }
       ]
     }
