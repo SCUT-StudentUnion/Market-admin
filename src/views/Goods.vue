@@ -10,9 +10,13 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="publishDate" label="发布日期" width="180" />
+      <el-table-column prop="createdTime" label="创建日期" width="190">
+        <template slot-scope="{row}">
+          {{row.createdTime.toLocaleString()}}
+        </template>
+      </el-table-column>
       <el-table-column prop="title" label="标题" />
-      <el-table-column prop="category" label="分类" width="150" />
+      <el-table-column prop="category.name" label="分类" width="150" />
       <el-table-column prop="status" label="状态" width="120">
         <goods-status-tag slot-scope="{row}" :status="row.status" />
       </el-table-column>
@@ -29,6 +33,7 @@
 
 <script>
 import GoodsStatusTag from "../components/GoodsStatusTag.vue";
+import { ListGoods } from "../api"
 
 export default {
   components: {
@@ -41,34 +46,11 @@ export default {
   },
   data() {
     return {
-      goods: [
-        {
-          publishDate: "2018-9-23",
-          title: "测试商品1",
-          detail: "这是商品的详细信息",
-          category: "分类1",
-          status: "selling"
-        },
-        {
-          publishDate: "2018-9-23",
-          title: "测试商品2",
-          category: "分类1",
-          status: "soldOut"
-        },
-        {
-          publishDate: "2018-9-23",
-          title: "测试商品3",
-          category: "分类2",
-          status: "pendingAudit"
-        },
-        {
-          publishDate: "2018-9-23",
-          title: "测试商品4",
-          category: "分类2",
-          status: "auditFailed"
-        }
-      ]
+      goods: []
     };
+  },
+  async created() {
+    this.goods = await ListGoods();
   }
 };
 </script>
