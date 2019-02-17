@@ -6,7 +6,7 @@
       </h2>
       <el-form :model="loginForm" label-width="60px" @submit.native.prevent="login">
         <el-form-item label="用户名">
-          <el-input v-model="loginForm.userName"></el-input>
+          <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码">
           <el-input type="password" v-model="loginForm.password"></el-input>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { login } from '../api';
+
 export default {
   data() {
     return {
@@ -25,8 +27,8 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log("login");
+    async login() {
+      await login(this.loginForm.username, this.loginForm.password)
       this.$router.replace({name: 'dashboard'});
     }
   }

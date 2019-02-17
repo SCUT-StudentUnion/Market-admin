@@ -8,11 +8,15 @@ const proxyConfig = {
       }
     }
   },
-  remote: "https://market-staging.huww98.cn/api"
+  remote: {
+    "/api": {
+      target: "https://market-staging.huww98.cn"
+    }
+  }
 };
 
 module.exports = {
-  baseUrl: process.env.NODE_ENV === "production" ? "/admin/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/admin/" : "/",
   devServer: {
     host: "localhost",
     port: 8081,
