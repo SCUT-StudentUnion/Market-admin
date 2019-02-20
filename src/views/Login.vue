@@ -17,13 +17,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import { login } from '../api';
 
-export default {
+export default Vue.extend({
   data() {
     return {
-      loginForm: {}
+      loginForm: {
+        username: "",
+        password: ""
+      }
     };
   },
   methods: {
@@ -32,7 +36,7 @@ export default {
       this.$router.replace({name: 'dashboard'});
     }
   }
-};
+});
 </script>
 
 

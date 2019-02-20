@@ -5,10 +5,10 @@
       <el-radio label="pending">待审核</el-radio>
       <el-radio label="changeRequested">未通过</el-radio>
     </el-radio-group>
-    <el-table v-loading="loading" :data="descriptions" style="width: 100%">
+    <el-table v-loading="pageLoading" :data="descriptions" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="{row}">
-          <goods-description :description="row" @reviewStatusUpdated="load"/>
+          <goods-description :description="row" @reviewStatusUpdated="loadPage"/>
         </template>
       </el-table-column>
       <el-table-column label="提交日期" width="190">
@@ -27,54 +27,41 @@
   </div>
 </template>
 
-<script>
-import GoodsDescription from "@/components/GoodsDescription.vue";
-import { getAllNeedReviewGoods, getAllChangeRequestedGoods } from "@/api";
+<script lang="ts">
+import GoodsDescriptionComponent from "@/components/GoodsDescription.vue";
+import { getAllNeedReviewGoods, getAllChangeRequestedGoods, GoodsDescription } from "@/api";
+import PagedContent from "@/mixins/PagedContent";
 
-export default {
+export default PagedContent.extend({
   components: {
-    GoodsDescription
+    'goods-description': GoodsDescriptionComponent
   },
   data() {
     return {
-      totalPages: 0,
-      currentPage: 0,
-      descriptions: null,
-      loading: false,
-      reviewStatus: "pending",
-      requestId: 0
+      reviewStatus: "pending" as "pending" | "changeRequested",
     };
   },
+  computed: {
+    descriptions(): null | GoodsDescription[]{
+      return this.content as null | GoodsDescription[]
+    }
+  },
   watch: {
-    currentPage() {
-      this.load();
-    },
     reviewStatus() {
-      this.load();
+      this.loadPage();
     }
   },
   methods: {
-    async load() {
-      this.loading = true;
+    async doLoadPage() {
       const api = {
         pending: getAllNeedReviewGoods,
         changeRequested: getAllChangeRequestedGoods
-      }
-      const currentRequestId = ++this.requestId;
-      try {
-        const result = await api[this.reviewStatus]({
-          page: this.currentPage - 1,
-          size: 10
-        });
-        if (currentRequestId != this.requestId) {
-          return; // another request has started
-        }
-        this.totalPages = result.totalPages;
-        this.descriptions = result.content;
-      } finally {
-        this.loading = false;
-      }
+      };
+      return await api[this.reviewStatus]({
+        page: this.currentPage - 1,
+        size: 10
+      });
     }
   }
-};
+});
 </script>

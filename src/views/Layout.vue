@@ -12,22 +12,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { logout, getAllNeedReviewGoods } from '@/api';
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   data() {
     return {
-      needReviewCount: null,
+      needReviewCount: null as number | null,
     };
   },
   computed: {
-    activeIndex() {
+    activeIndex(): string | undefined {
       return this.$route.name;
     }
   },
   methods: {
-    handleSelect(key) {
+    handleSelect(key: string) {
       if (key === "logout") {
         logout();
         this.$router.replace({ name: "login" });
@@ -42,7 +43,7 @@ export default {
       this.needReviewCount = pages;
     }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

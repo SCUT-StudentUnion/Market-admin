@@ -4,16 +4,14 @@
   </el-tag>
 </template>
 
-<script>
-const statusTranslate = {
-  approved: '审核通过',
-  changeRequested: '审核未通过',
-  pending: '等待审核',
-};
+<script lang="ts">
+import Vue from 'vue';
+import { reviewStatus } from '@/i18n';
 
-export default {
+
+export default Vue.extend({
   props: {
-    status: String
+    status: String as () => keyof typeof reviewStatus
   },
   computed:{
     tagType() {
@@ -27,9 +25,9 @@ export default {
           return '';
       }
     },
-    tagText() {
-      return statusTranslate[this.status];
+    tagText(): string {
+      return reviewStatus[this.status];
     }
   }
-}
+});
 </script>

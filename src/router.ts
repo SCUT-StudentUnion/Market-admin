@@ -44,10 +44,12 @@ const router = new Router({
   ]
 })
 
+import { Location } from "vue-router";
+
 router.beforeEach((to, from, next) => {
   const isPublic = to.meta && to.meta.public;
   if (!isPublic && !hasLogedIn()) {
-    const loginRoute = { name: "login" };
+    const loginRoute: Location = { name: "login" };
     if (to.name) loginRoute.params = { return: to.name };
     next(loginRoute);
   } else {
