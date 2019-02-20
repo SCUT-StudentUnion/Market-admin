@@ -6,10 +6,9 @@
 
 <script>
 const statusTranslate = {
-  soldOut: '已售出',
-  selling: '出售中',
-  auditFailed: '审核未通过',
-  pendingAudit: '等待审核'
+  approved: '审核通过',
+  changeRequested: '审核未通过',
+  pending: '等待审核',
 };
 
 export default {
@@ -19,13 +18,11 @@ export default {
   computed:{
     tagType() {
       switch (this.status) {
-        case 'soldOut':
-          return 'info';
-        case 'selling':
+        case 'approved':
           return 'success';
-        case 'auditFailed':
+        case 'changeRequested':
           return 'danger';
-        case 'pendingAudit':
+        case 'pending':
         default:
           return '';
       }

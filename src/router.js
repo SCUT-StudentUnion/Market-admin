@@ -4,17 +4,21 @@ import Login from './views/Login.vue'
 import Layout from './views/Layout.vue'
 import Dashboard from './views/Dashboard.vue'
 import Goods from "./views/Goods.vue";
-import Audit from "./views/Audit.vue";
+import Review from "./views/Review.vue";
+import { hasLogedIn } from './api';
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/login',
       name: 'login',
+      meta: {
+        public: true
+      },
       component: Login
     },
     {
@@ -31,11 +35,24 @@ export default new Router({
           name: 'goods',
           component: Goods
         }, {
-          path: '/audit',
-          name: 'audit',
-          component: Audit
+          path: '/review',
+          name: 'review',
+          component: Review
         }
       ]
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const isPublic = to.meta && to.meta.public;
+  if (!isPublic && !hasLogedIn()) {
+    const loginRoute = { name: "login" };
+    if (to.name) loginRoute.params = { return: to.name };
+    next(loginRoute);
+  } else {
+    next();
+  }
+});
+
+export default router;
